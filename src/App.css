@@ -1,10 +1,19 @@
 .app {
   min-height: 100vh;
-  background: radial-gradient(1200px 800px at 70% -10%, rgba(255, 179, 92, 0.2), transparent 60%),
-    radial-gradient(900px 700px at 0% 10%, rgba(105, 212, 181, 0.18), transparent 55%),
+  background: radial-gradient(
+      1200px 800px at 70% -10%,
+      rgba(255, 179, 92, 0.2),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 700px at 0% 10%,
+      rgba(105, 212, 181, 0.18),
+      transparent 55%
+    ),
     linear-gradient(180deg, var(--bg-0), var(--bg-2));
   position: relative;
   overflow: hidden;
+  perspective: 1400px;
 }
 
 .app::before {
@@ -18,12 +27,26 @@
   pointer-events: none;
 }
 
+.app::after {
+  content: "";
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  right: -240px;
+  top: -180px;
+  background: radial-gradient(circle, rgba(255, 179, 92, 0.35), transparent 70%);
+  filter: blur(10px);
+  opacity: 0.7;
+  animation: slowPulse 18s ease-in-out infinite;
+  pointer-events: none;
+}
+
 main {
   position: relative;
   z-index: 1;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem 5rem;
+  padding: 1rem 1.5rem 5rem;
 }
 
 .site-header {
@@ -86,20 +109,45 @@ main {
 }
 
 .site-nav a {
+  position: relative;
   transition: color 0.2s ease;
+}
+
+.site-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  opacity: 0;
+  transform: scaleX(0.3);
+  transform-origin: left;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .site-nav a:hover {
   color: var(--accent);
 }
 
+.site-nav a:hover::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
 .ghost-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.65rem 1.4rem;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: transparent;
   color: var(--text);
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: border 0.2s ease, color 0.2s ease, background 0.2s ease;
 }
@@ -111,10 +159,43 @@ main {
 }
 
 .hero {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   gap: 3rem;
   padding: 4.5rem 0 2.5rem;
+  transform-style: preserve-3d;
+}
+
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(2px);
+  opacity: 0.6;
+  animation: float 16s ease-in-out infinite;
+  z-index: 0;
+}
+
+.orb-1 {
+  width: 240px;
+  height: 240px;
+  left: -40px;
+  top: 20px;
+  background: radial-gradient(circle, rgba(105, 212, 181, 0.5), transparent 70%);
+}
+
+.orb-2 {
+  width: 320px;
+  height: 320px;
+  right: 20px;
+  bottom: 0;
+  background: radial-gradient(circle, rgba(255, 179, 92, 0.45), transparent 70%);
+  animation-delay: -6s;
 }
 
 .eyebrow {
@@ -187,7 +268,7 @@ main {
 }
 
 .hero-highlights li::before {
-  content: "◆";
+  content: "*";
   color: var(--accent);
   font-size: 0.9rem;
   margin-top: 0.2rem;
@@ -197,14 +278,36 @@ main {
   display: grid;
   gap: 1rem;
   align-content: start;
+  transform-style: preserve-3d;
 }
 
 .info-card {
+  position: relative;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 20px;
   padding: 1.4rem;
   box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: border 0.25s ease, box-shadow 0.25s ease;
+}
+
+.info-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.08), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.info-card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.info-card:hover::after {
+  opacity: 1;
 }
 
 .info-card h3 {
@@ -215,6 +318,10 @@ main {
 .info-card p {
   margin: 0;
   color: var(--muted);
+}
+
+.info-contact p + p {
+  margin-top: 0.35rem;
 }
 
 .section {
@@ -259,6 +366,7 @@ main {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.5rem;
+  transform-style: preserve-3d;
 }
 
 .card {
@@ -267,6 +375,11 @@ main {
   padding: 1.8rem;
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
+  transition: border 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
 .card h3 {
@@ -282,6 +395,7 @@ main {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.5rem;
+  transform-style: preserve-3d;
 }
 
 .step {
@@ -290,6 +404,11 @@ main {
   border-radius: 24px;
   border: 1px dashed rgba(255, 255, 255, 0.18);
   background: rgba(15, 20, 18, 0.7);
+  transition: border 0.25s ease, box-shadow 0.25s ease;
+}
+
+.step:hover {
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 .step-number {
@@ -315,15 +434,34 @@ main {
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(255, 255, 255, 0.06);
   color: var(--muted);
+  transition: border 0.2s ease, color 0.2s ease;
+}
+
+.pill:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--text);
 }
 
 .cta {
+  position: relative;
   padding: 3rem;
   background: linear-gradient(140deg, rgba(255, 179, 92, 0.2), rgba(105, 212, 181, 0.15));
   border-radius: 28px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   display: grid;
   gap: 1rem;
+  overflow: hidden;
+}
+
+.cta::after {
+  content: "";
+  position: absolute;
+  left: -20%;
+  top: 0;
+  width: 140%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  opacity: 0.5;
 }
 
 .cta h3 {
@@ -336,9 +474,42 @@ main {
   color: var(--muted);
 }
 
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.contact-card {
+  display: grid;
+  gap: 0.3rem;
+  padding: 1rem 1.2rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(12, 16, 14, 0.6);
+  transition: border 0.25s ease, box-shadow 0.25s ease;
+}
+
+.contact-card:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.contact-label {
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.7rem;
+  color: var(--accent);
+}
+
+.contact-value {
+  font-size: 1rem;
+  color: var(--text);
+}
+
 .faq {
   display: grid;
   gap: 1rem;
+  transform-style: preserve-3d;
 }
 
 .faq-item {
@@ -346,6 +517,11 @@ main {
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(15, 20, 18, 0.6);
+  transition: border 0.25s ease, box-shadow 0.25s ease;
+}
+
+.faq-item:hover {
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .faq-item h4 {
@@ -358,18 +534,40 @@ main {
 }
 
 .reveal {
-  animation: rise 0.8s ease both;
-  animation-delay: var(--delay, 0s);
+  opacity: 1;
+  transform: translateZ(0);
 }
 
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
+.tilt-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border 0.35s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tilt-card:hover {
+    transform: translateY(-10px) rotateX(4deg) rotateY(-4deg);
+    box-shadow: 0 40px 80px rgba(6, 8, 7, 0.45);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes slowPulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.9;
   }
 }
 
@@ -394,8 +592,23 @@ main {
   }
 }
 
+@media (max-width: 600px) {
+  .site-header {
+    padding: 1rem 1.3rem;
+  }
+
+  .ghost-button {
+    width: 100%;
+  }
+
+  .cta {
+    padding: 2rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .hero-orb,
+  .app::after {
     animation: none;
   }
 }

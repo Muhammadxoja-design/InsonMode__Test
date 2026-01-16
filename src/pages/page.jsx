@@ -1,14 +1,109 @@
-import React from "react";
-import Header from "../components/header.jsx";
+import React, { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import WhatIs from "../components/whatis";
+import What from "../components/why";
+import Qanday from "../components/qanday";
+import Queshon from "../components/queshon";
+import Yonalishlar from "../components/yonalishlar";
 
 export default function Page() {
+  const rootRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReduced) {
+      return;
+    }
+
+    let observer;
+    const ctx = gsap.context(() => {
+      gsap.set(".reveal", {
+        opacity: 0,
+        y: 24,
+        rotateX: 6,
+        transformPerspective: 800,
+      });
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            const delayValue = parseFloat(
+              getComputedStyle(entry.target).getPropertyValue("--delay")
+            );
+            const delay = Number.isNaN(delayValue) ? 0 : delayValue;
+
+            gsap.to(entry.target, {
+              opacity: 1,
+              y: 0,
+              rotateX: 0,
+              duration: 0.8,
+              ease: "power3.out",
+              delay,
+            });
+            observer.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.2 }
+      );
+
+      gsap.utils.toArray(".reveal").forEach((el) => observer.observe(el));
+
+      const heroTl = gsap.timeline({
+        defaults: { ease: "power3.out", duration: 0.9 },
+      });
+
+      heroTl
+        .from(".site-header", { y: -30, opacity: 0 })
+        .from(".hero-copy > *", { opacity: 0, y: 20, stagger: 0.08 }, "-=0.4")
+        .from(
+          ".hero-panel .info-card",
+          { opacity: 0, x: 24, y: 12, stagger: 0.12 },
+          "-=0.6"
+        );
+
+      gsap.to(".hero-panel", {
+        rotateY: 4,
+        rotateX: -2,
+        duration: 8,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      gsap.to(".hero-orb", {
+        y: -12,
+        duration: 6,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        stagger: 1,
+      });
+    }, rootRef);
+
+    return () => {
+      if (observer) {
+        observer.disconnect();
+      }
+      ctx.revert();
+    };
+  }, []);
+
   return (
-    <div className="app">
+    <div className="app" ref={rootRef}>
       <main>
         <section className="hero">
-          <div className="hero-copy reveal" style={{ "--delay": "0.1s" }}>
+          <div className="hero-orb orb-1" aria-hidden="true" />
+          <div className="hero-orb orb-2" aria-hidden="true" />
+          <div className="hero-copy">
             <p className="eyebrow">Insoniy diqqat rejimi</p>
-            <h1>Inson Mode — shovqindan chiqib, ma'no bilan yashash usuli.</h1>
+            <h1>Inson Mode - shovqindan chiqib, ma'no bilan yashash usuli.</h1>
             <p className="lead">
               Inson Mode biz birga qurayotgan harakat: insoniy odatlar, diqqatni
               boshqarish, sog'lom munosabatlar va raqamli intizomni qayta
@@ -16,10 +111,10 @@ export default function Page() {
               xizmat qildiradi.
             </p>
             <div className="hero-actions">
-              <a className="primary-button" href="#aloqa">
+              <a href="https://t.me/InsonMode" className="primary-button">
                 Hamkorlikni boshlash
               </a>
-              <a className="secondary-button" href="#qanday">
+              <a href="#qanday" className="secondary-button">
                 Qanday ishlaydi?
               </a>
             </div>
@@ -29,127 +124,30 @@ export default function Page() {
               <li>Qadriyatga tayangan, sokin va kuchli ritm.</li>
             </ul>
           </div>
-          <div className="hero-panel reveal" style={{ "--delay": "0.3s" }}>
-            <div className="info-card">
+          <div className="hero-panel">
+            <div className="info-card tilt-card">
               <h3>3 qatlamli yondashuv</h3>
               <p>Odat + Makon + Raqamli intizom.</p>
             </div>
-            <div className="info-card">
+            <div className="info-card tilt-card">
               <h3>Muvozanat signalari</h3>
               <p>Charchoq, ortiqcha kontent va tarqoqlikni erta aniqlash.</p>
             </div>
-            <div className="info-card">
+            <div className="info-card tilt-card">
               <h3>Kichik qadamlar</h3>
               <p>Har kuni 20 daqiqa ongli rejimni mustahkamlash.</p>
             </div>
-          </div>
-        </section>
-
-        <section className="section" id="nima">
-          <div className="section-header reveal" style={{ "--delay": "0.1s" }}>
-            <p className="section-kicker">Nima bu?</p>
-            <h2>
-              Inson Mode bu yangi hayot rejimi, shaxsiy va jamoaviy tizim.
-            </h2>
-            <p className="lead">
-              Biz insonni markazga qo'yamiz: uning diqqatini, tanasini,
-              munosabatlarini va maqsadini birlashtiramiz. Bu rejim sizga
-              ortiqcha shovqinlarni cheklash, mazmunli ishlarga joy ochish va
-              hayotni soddalashtirishga yordam beradi.
-            </p>
-          </div>
-          <div className="two-col">
-            <p className="reveal" style={{ "--delay": "0.2s" }}>
-              Inson Mode o'zini boshqarishning tiliga aylanadi: "qayerga
-              qarayapman?", "nima uchun qilayapman?", "hozir men kim
-              bo'lyapman?" degan savollarni kun tartibiga qaytaradi. Har bir
-              blok amaliy: ko'nikma, jarayon va o'lchov mavjud.
-            </p>
-            <div className="quote-card reveal" style={{ "--delay": "0.3s" }}>
-              "Inson Mode — faqat g'oya emas. Bu intizom, hamjamiyat va kundalik
-              mikro-qarorlar tizimi. Biz ularni birga sinovdan o'tkazamiz va
-              soddalashtiramiz."
+            <div className="info-card info-contact tilt-card">
+              <h3>Tez aloqa</h3>
+              <p>Telegram: @InsonMode</p>
+              <p>Email: coderkimyonazarov@gmail.com</p>
             </div>
           </div>
         </section>
-
-        <section className="section" id="nega">
-          <div className="section-header reveal" style={{ "--delay": "0.1s" }}>
-            <p className="section-kicker">Nega kerak?</p>
-            <h2>Chuqur diqqat — yangi boylik. Biz uni himoya qilamiz.</h2>
-          </div>
-          <div className="card-grid">
-            <div className="card reveal" style={{ "--delay": "0.2s" }}>
-              <h3>Tarqoqlikka qarshi qalqon</h3>
-              <p>
-                Uzluksiz bildirishnomalar va kontent oqimi diqqatni bo'ladi.
-                Inson Mode diqqat uchun yangi chegaralar yaratadi.
-              </p>
-            </div>
-            <div className="card reveal" style={{ "--delay": "0.3s" }}>
-              <h3>Munosabatlarni tiklash</h3>
-              <p>
-                Odamlar bilan to'liq, hushyor muloqot qilish uchun raqamli
-                shovqinni pasaytiramiz.
-              </p>
-            </div>
-            <div className="card reveal" style={{ "--delay": "0.4s" }}>
-              <h3>Energiya va sog'liq</h3>
-              <p>
-                Uyqu, jismoniy faollik va ruhiy barqarorlikni
-                qo'llab-quvvatlaydigan ritmni tiklaymiz.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="section" id="qanday">
-          <div className="section-header reveal" style={{ "--delay": "0.1s" }}>
-            <p className="section-kicker">Qanday ishlaydi?</p>
-            <h2>3 bosqich: kuzatish, qayta sozlash, mustahkamlash.</h2>
-          </div>
-          <div className="steps">
-            <div className="step reveal" style={{ "--delay": "0.2s" }}>
-              <span className="step-number">01</span>
-              <h3>Kuzatuv</h3>
-              <p>
-                Kunlik diqqat xaritasi tuziladi: vaqt, vazifa va raqamli sarf
-                xaritasi.
-              </p>
-            </div>
-            <div className="step reveal" style={{ "--delay": "0.3s" }}>
-              <span className="step-number">02</span>
-              <h3>Qayta sozlash</h3>
-              <p>
-                Keraksiz odatlar o'rniga 3 ta asosiy rejim: fokus, dam, aloqa.
-              </p>
-            </div>
-            <div className="step reveal" style={{ "--delay": "0.4s" }}>
-              <span className="step-number">03</span>
-              <h3>Mustahkamlash</h3>
-              <p>
-                Haftalik refleksiya, jamoaviy nazorat va o'zgarishlarni
-                o'lchash.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="section">
-          <div className="section-header reveal" style={{ "--delay": "0.1s" }}>
-            <p className="section-kicker">Yo'nalishlar</p>
-            <h2>Inson Mode har bir hayot sohasi uchun moslashadi.</h2>
-          </div>
-          <div className="pill-grid">
-            <span className="pill">Diqqat va fokus</span>
-            <span className="pill">Oila va munosabatlar</span>
-            <span className="pill">Sog'liq va uyqu</span>
-            <span className="pill">O'qish va o'sish</span>
-            <span className="pill">Ijod va ishlab chiqarish</span>
-            <span className="pill">Raqamli gigiyena</span>
-            <span className="pill">Jamoaviy ritm</span>
-          </div>
-        </section>
+        <WhatIs />
+        <What />
+        <Qanday />
+        <Yonalishlar />
 
         <section className="section">
           <div className="section-header reveal" style={{ "--delay": "0.1s" }}>
@@ -157,21 +155,30 @@ export default function Page() {
             <h2>Bizni ushlab turadigan 4 asosiy ustun.</h2>
           </div>
           <div className="card-grid">
-            <div className="card reveal" style={{ "--delay": "0.2s" }}>
+            <div
+              className="card reveal tilt-card"
+              style={{ "--delay": "0.2s" }}
+            >
               <h3>Ongli tanlov</h3>
               <p>
                 Har bir harakatdan oldin maqsadni tekshirish. Avtopilot emas,
                 ongli rejim.
               </p>
             </div>
-            <div className="card reveal" style={{ "--delay": "0.3s" }}>
+            <div
+              className="card reveal tilt-card"
+              style={{ "--delay": "0.3s" }}
+            >
               <h3>Soddalik</h3>
               <p>
                 Qoidalar kam, lekin aniq. Qiyin jarayonlarni kichik ritmlarga
                 bo'lamiz.
               </p>
             </div>
-            <div className="card reveal" style={{ "--delay": "0.4s" }}>
+            <div
+              className="card reveal tilt-card"
+              style={{ "--delay": "0.4s" }}
+            >
               <h3>Hamjamiyat</h3>
               <p>
                 Birga kuzatamiz, birga o'rganamiz. Yakka emas, jamoa bilan
@@ -181,34 +188,7 @@ export default function Page() {
           </div>
         </section>
 
-        <section className="section">
-          <div className="section-header reveal" style={{ "--delay": "0.1s" }}>
-            <p className="section-kicker">Savollar</p>
-            <h2>Tez-tez so'raladigan savollar.</h2>
-          </div>
-          <div className="faq">
-            <div className="faq-item reveal" style={{ "--delay": "0.2s" }}>
-              <h4>Inson Mode kimlar uchun?</h4>
-              <p>
-                Diqqatini boshqarishni istagan har bir inson, jamoa yoki
-                tashkilot uchun.
-              </p>
-            </div>
-            <div className="faq-item reveal" style={{ "--delay": "0.3s" }}>
-              <h4>Qancha vaqt natija beradi?</h4>
-              <p>
-                Birinchi yengillik 7-10 kunda seziladi, barqaror natija 6-8
-                haftada.
-              </p>
-            </div>
-            <div className="faq-item reveal" style={{ "--delay": "0.4s" }}>
-              <h4>Texnologiyani butunlay tark etamizmi?</h4>
-              <p>
-                Yo'q. Maqsad — foydali va ma'no beradigan texnologiya ishlatish.
-              </p>
-            </div>
-          </div>
-        </section>
+        <Queshon />
 
         <section className="section" id="aloqa">
           <div className="cta reveal" style={{ "--delay": "0.1s" }}>
@@ -217,9 +197,30 @@ export default function Page() {
               Sizning tajribangiz va ehtiyojingizga mos rejimni tuzib beramiz.
               Bizga yozing yoki hamkorlikni boshlaylik.
             </p>
+            <div className="contact-grid">
+              <a
+                className="contact-card tilt-card"
+                href="mailto:coderkimyonazarov@gmail.com"
+              >
+                <span className="contact-label">Email</span>
+                <span className="contact-value">
+                  coderkimyonazarov@gmail.com
+                </span>
+              </a>
+              <a
+                className="contact-card tilt-card"
+                href="https://t.me/InsonMode"
+              >
+                <span className="contact-label">Telegram</span>
+                <span className="contact-value">@InsonMode</span>
+              </a>
+            </div>
             <div className="hero-actions">
-              <a className="primary-button" href="mailto:hello@insonmode.uz">
-                hello@insonmode.uz
+              <a
+                className="primary-button"
+                href="mailto:coderkimyonazarov@gmail.com"
+              >
+                Xat yozish
               </a>
               <a className="secondary-button" href="#nima">
                 Manifestga qaytish

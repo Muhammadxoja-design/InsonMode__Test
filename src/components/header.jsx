@@ -16,9 +16,9 @@ export default function Header() {
         <a href="#qanday">Qanday ishlaydi?</a>
         <a href="#aloqa">Aloqa</a>
       </nav>
-      <button className="ghost-button" type="button">
-        Hamkorlik
-      </button>
+      <a className="ghost-button" href="https://t.me/InsonMode">
+        Telegram
+      </a>
     </header>
   );
 }
