@@ -101,46 +101,48 @@ export default function Page() {
         <section className="hero">
           <div className="hero-orb orb-1" aria-hidden="true" />
           <div className="hero-orb orb-2" aria-hidden="true" />
-          <div className="hero-copy">
-            <p className="eyebrow">Insoniy diqqat rejimi</p>
-            <h1>Inson Mode - shovqindan chiqib, ma'no bilan yashash usuli.</h1>
-            <p className="lead">
-              Inson Mode biz birga qurayotgan harakat: insoniy odatlar, diqqatni
-              boshqarish, sog'lom munosabatlar va raqamli intizomni qayta
-              tiklaydi. Bu loyiha texnologiyani to'xtatmaydi, uni maqsadga
-              xizmat qildiradi.
-            </p>
-            <div className="hero-actions">
-              <a href="https://t.me/InsonMode" className="primary-button">
-                Hamkorlikni boshlash
-              </a>
-              <a href="#qanday" className="secondary-button">
-                Qanday ishlaydi?
-              </a>
+          <div className="container hero-inner">
+            <div className="hero-copy">
+              <p className="eyebrow">Insoniy diqqat rejimi</p>
+              <h1>Inson Mode - shovqindan chiqib, ma'no bilan yashash usuli.</h1>
+              <p className="lead">
+                Inson Mode biz birga qurayotgan harakat: insoniy odatlar,
+                diqqatni boshqarish, sog'lom munosabatlar va raqamli intizomni
+                qayta tiklaydi. Bu loyiha texnologiyani to'xtatmaydi, uni
+                maqsadga xizmat qildiradi.
+              </p>
+              <div className="hero-actions">
+                <a href="https://t.me/InsonMode" className="primary-button">
+                  Hamkorlikni boshlash
+                </a>
+                <a href="#qanday" className="secondary-button">
+                  Qanday ishlaydi?
+                </a>
+              </div>
+              <ul className="hero-highlights">
+                <li>Diqqatni himoya qiluvchi kundalik amaliyotlar.</li>
+                <li>Oila, jamoa va ish uchun aniq raqamli qoidalar.</li>
+                <li>Qadriyatga tayangan, sokin va kuchli ritm.</li>
+              </ul>
             </div>
-            <ul className="hero-highlights">
-              <li>Diqqatni himoya qiluvchi kundalik amaliyotlar.</li>
-              <li>Oila, jamoa va ish uchun aniq raqamli qoidalar.</li>
-              <li>Qadriyatga tayangan, sokin va kuchli ritm.</li>
-            </ul>
-          </div>
-          <div className="hero-panel">
-            <div className="info-card tilt-card">
-              <h3>3 qatlamli yondashuv</h3>
-              <p>Odat + Makon + Raqamli intizom.</p>
-            </div>
-            <div className="info-card tilt-card">
-              <h3>Muvozanat signalari</h3>
-              <p>Charchoq, ortiqcha kontent va tarqoqlikni erta aniqlash.</p>
-            </div>
-            <div className="info-card tilt-card">
-              <h3>Kichik qadamlar</h3>
-              <p>Har kuni 20 daqiqa ongli rejimni mustahkamlash.</p>
-            </div>
-            <div className="info-card info-contact tilt-card">
-              <h3>Tez aloqa</h3>
-              <p>Telegram: @InsonMode</p>
-              <p>Email: coderkimyonazarov@gmail.com</p>
+            <div className="hero-panel">
+              <div className="info-card tilt-card">
+                <h3>3 qatlamli yondashuv</h3>
+                <p>Odat + Makon + Raqamli intizom.</p>
+              </div>
+              <div className="info-card tilt-card">
+                <h3>Muvozanat signalari</h3>
+                <p>Charchoq, ortiqcha kontent va tarqoqlikni erta aniqlash.</p>
+              </div>
+              <div className="info-card tilt-card">
+                <h3>Kichik qadamlar</h3>
+                <p>Har kuni 20 daqiqa ongli rejimni mustahkamlash.</p>
+              </div>
+              <div className="info-card info-contact tilt-card">
+                <h3>Tez aloqa</h3>
+                <p>Telegram: @InsonMode</p>
+                <p>Email: coderkimyonazarov@gmail.com</p>
+              </div>
             </div>
           </div>
         </section>
@@ -150,40 +152,45 @@ export default function Page() {
         <Yonalishlar />
 
         <section className="section">
-          <div className="section-header reveal" style={{ "--delay": "0.1s" }}>
-            <p className="section-kicker">Tamoyillar</p>
-            <h2>Bizni ushlab turadigan 4 asosiy ustun.</h2>
-          </div>
-          <div className="card-grid">
+          <div className="container">
             <div
-              className="card reveal tilt-card"
-              style={{ "--delay": "0.2s" }}
+              className="section-header reveal"
+              style={{ "--delay": "0.1s" }}
             >
-              <h3>Ongli tanlov</h3>
-              <p>
-                Har bir harakatdan oldin maqsadni tekshirish. Avtopilot emas,
-                ongli rejim.
-              </p>
+              <p className="section-kicker">Tamoyillar</p>
+              <h2>Bizni ushlab turadigan 4 asosiy ustun.</h2>
             </div>
-            <div
-              className="card reveal tilt-card"
-              style={{ "--delay": "0.3s" }}
-            >
-              <h3>Soddalik</h3>
-              <p>
-                Qoidalar kam, lekin aniq. Qiyin jarayonlarni kichik ritmlarga
-                bo'lamiz.
-              </p>
-            </div>
-            <div
-              className="card reveal tilt-card"
-              style={{ "--delay": "0.4s" }}
-            >
-              <h3>Hamjamiyat</h3>
-              <p>
-                Birga kuzatamiz, birga o'rganamiz. Yakka emas, jamoa bilan
-                mustahkamlash.
-              </p>
+            <div className="card-grid">
+              <div
+                className="card reveal tilt-card"
+                style={{ "--delay": "0.2s" }}
+              >
+                <h3>Ongli tanlov</h3>
+                <p>
+                  Har bir harakatdan oldin maqsadni tekshirish. Avtopilot emas,
+                  ongli rejim.
+                </p>
+              </div>
+              <div
+                className="card reveal tilt-card"
+                style={{ "--delay": "0.3s" }}
+              >
+                <h3>Soddalik</h3>
+                <p>
+                  Qoidalar kam, lekin aniq. Qiyin jarayonlarni kichik ritmlarga
+                  bo'lamiz.
+                </p>
+              </div>
+              <div
+                className="card reveal tilt-card"
+                style={{ "--delay": "0.4s" }}
+              >
+                <h3>Hamjamiyat</h3>
+                <p>
+                  Birga kuzatamiz, birga o'rganamiz. Yakka emas, jamoa bilan
+                  mustahkamlash.
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -191,40 +198,42 @@ export default function Page() {
         <Queshon />
 
         <section className="section" id="aloqa">
-          <div className="cta reveal" style={{ "--delay": "0.1s" }}>
-            <h3>Inson Mode'ni birga quramizmi?</h3>
-            <p>
-              Sizning tajribangiz va ehtiyojingizga mos rejimni tuzib beramiz.
-              Bizga yozing yoki hamkorlikni boshlaylik.
-            </p>
-            <div className="contact-grid">
-              <a
-                className="contact-card tilt-card"
-                href="mailto:coderkimyonazarov@gmail.com"
-              >
-                <span className="contact-label">Email</span>
-                <span className="contact-value">
-                  coderkimyonazarov@gmail.com
-                </span>
-              </a>
-              <a
-                className="contact-card tilt-card"
-                href="https://t.me/InsonMode"
-              >
-                <span className="contact-label">Telegram</span>
-                <span className="contact-value">@InsonMode</span>
-              </a>
-            </div>
-            <div className="hero-actions">
-              <a
-                className="primary-button"
-                href="mailto:coderkimyonazarov@gmail.com"
-              >
-                Xat yozish
-              </a>
-              <a className="secondary-button" href="#nima">
-                Manifestga qaytish
-              </a>
+          <div className="container">
+            <div className="cta reveal" style={{ "--delay": "0.1s" }}>
+              <h3>Inson Mode'ni birga quramizmi?</h3>
+              <p>
+                Sizning tajribangiz va ehtiyojingizga mos rejimni tuzib beramiz.
+                Bizga yozing yoki hamkorlikni boshlaylik.
+              </p>
+              <div className="contact-grid">
+                <a
+                  className="contact-card tilt-card"
+                  href="mailto:coderkimyonazarov@gmail.com"
+                >
+                  <span className="contact-label">Email</span>
+                  <span className="contact-value">
+                    coderkimyonazarov@gmail.com
+                  </span>
+                </a>
+                <a
+                  className="contact-card tilt-card"
+                  href="https://t.me/InsonMode"
+                >
+                  <span className="contact-label">Telegram</span>
+                  <span className="contact-value">@InsonMode</span>
+                </a>
+              </div>
+              <div className="hero-actions">
+                <a
+                  className="primary-button"
+                  href="mailto:coderkimyonazarov@gmail.com"
+                >
+                  Xat yozish
+                </a>
+                <a className="secondary-button" href="#nima">
+                  Manifestga qaytish
+                </a>
+              </div>
             </div>
           </div>
         </section>
